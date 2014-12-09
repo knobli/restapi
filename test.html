@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <title>URL Test</title>
   <style type="text/css">
-    textarea {width: 100%; min-height: 20em;}
+    textarea {width: 90%; min-height: 20em;}
   </style>
   <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
 </head>
@@ -21,15 +21,15 @@
 <textarea id="create" readonly></textarea>
 
 <h2>Read</h2>
-<label>index.php/episode</label><br>
+<label>index.php/episode/10/</label><br>
 <textarea id="read" readonly></textarea>
 
 <h2>Update</h2>
-<label>index.php/episode</label><br>
+<label>index.php/episode/21/</label><br>
 <textarea id="update" readonly></textarea>
 
 <h2>Delete</h2>
-<label>index.php/episode</label><br>
+<label>index.php/episode/21/</label><br>
 <textarea id="delete" readonly></textarea>
 
 <h2>List with search parameter</h2>
@@ -39,11 +39,17 @@
 
 <script type="text/javascript">
   $(function(){
+
+    // index
     $.get('index.php/episode/', function(response) {
       $('#list').text(JSON.stringify(response, null, " "));
     });
 
-    $.post('index.php/episode/', {
+    // create
+    $.ajax('index.php/episode/', {
+        async: false,
+        type: 'POST',
+        data: {
           NR_TOTAL: 21,
           NR_STAFFEL: 1,
           DEUTSCHER_TITEL: 'No Mas',
@@ -55,13 +61,41 @@
           US_QUOTEN: '1,954 Mio.',
           INHALT: "Der Unfall hat große gesellschaftliche Folgen. Jesse beendet die Reha erfolgreich. Skyler konfrontiert Walter mit seinen Drogengeschäften und sucht eine Scheidungsanwältin auf. Walter lehnt einen neuen Deal mit Gus ab. Währenddessen kommen Tucos Cousins, um Walter zu töten."
         },
-        function(response){
+        success: function(response){
           $('#create').text(JSON.stringify(response, null, " "));
+      }
+    });
+
+    // read
+    $.get('index.php/episode/10/', function(response) {
+      $('#read').text(JSON.stringify(response, null, " "));
     });
     
     $.get('index.php/episode/INHALT/Walter', function(response) {
       $('#listSearch').text(JSON.stringify(response, null, " "));
     });
+
+    // update
+    $.ajax({
+      url: 'index.php/episode/21/',
+      type: 'PUT',
+      async: false,
+      data: {'DEUTSCHER_TITEL': 'Nicht mehr'},
+      success: function(result) {
+        $('#update').text(JSON.stringify(response, null, " "));
+      }
+    });
+
+    // delete
+    $.ajax({
+        url: 'index.php/episode/21/',
+        type: 'DELETE',
+        async: false,
+        success: function(result) {
+      $('#delete').text(JSON.stringify(response, null, " "));
+    }
+  });
+
 
   });
 </script>
