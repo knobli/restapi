@@ -105,21 +105,37 @@ class EpisodeController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
+		$json = file_get_contents('php://input');
+		$put_vars = CJSON::decode($json,true);
 		$model=$this->loadModel($id);
+		
+		if($model === null){
+        $this->_sendResponse(400, 
+                sprintf("Error: Didn't find any model <b>%s</b> with ID <b>%s</b>.",
+                'Episode', $id) );
+		}
 
 		// Uncomment the following line if AJAX validation is needed
 		// $this->performAjaxValidation($model);
 
-		if(isset($_POST['Episode']))
-		{
-			$model->attributes=$_POST['Episode'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->NR_TOTAL));
+		   // Try to assign PUT parameters to attributes
+	    foreach($put_vars as $var=>$value) {
+	        // Does model have this attribute? If not, raise an error
+	        if($model->hasAttribute($var))
+	            $model->$var = $value;
+	        else {
+	            $this->_sendResponse(500, 
+	                sprintf('Parameter <b>%s</b> is not allowed for model <b>%s</b>',
+	                $var, $_GET['model']) );
+	        }
+	    }
+		
+	    // Try to save the model
+	    if($model->save()){
+	        $this->_sendResponse(200, CJSON::encode($model));
+	    }else{
+	        $this->_sendResponse(500, $msg );
 		}
-
-		$this->render('update',array(
-			'model'=>$model,
-		));
 	}
 
 	/**
@@ -129,11 +145,22 @@ class EpisodeController extends Controller
 	 */
 	public function actionDelete($id)
 	{
-		$this->loadModel($id)->delete();
+		$model=$this->loadModel($id);
+		if($model === null){
+        $this->_sendResponse(400, 
+                sprintf("Error: Didn't find any model <b>%s</b> with ID <b>%s</b>.",
+                $_GET['model'], $_GET['id']) );
+		}
 
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
-		if(!isset($_GET['ajax']))
-			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
+		 // Delete the model
+	    $num = $model->delete();
+	    if($num>0){
+	        $this->_sendResponse(200, $num);    //this is the only way to work with backbone
+	    } else{
+	        $this->_sendResponse(500, 
+	                sprintf("Error: Couldn't delete model <b>%s</b> with ID <b>%s</b>.",
+	                $_GET['model'], $_GET['id']) );
+		}
 	}
 
 	/**
