@@ -52,11 +52,11 @@ return array(
             'urlFormat'=>'path',
             'rules'=>array(
                 // REST patterns
-                array('episode/list', 'pattern'=>'episode/<model:\w+>', 'verb'=>'GET'),
-                array('episode/view', 'pattern'=>'episode/<model:\w+>/<id:\d+>', 'verb'=>'GET'),
-                array('episode/update', 'pattern'=>'episode/<model:\w+>/<id:\d+>', 'verb'=>'PUT'),
-                array('episode/delete', 'pattern'=>'episode/<model:\w+>/<id:\d+>', 'verb'=>'DELETE'),
-                array('episode/create', 'pattern'=>'episode/<model:\w+>', 'verb'=>'POST'),
+                array('episode/index', 'pattern'=>'episode', 'verb'=>'GET'),
+                array('episode/view', 'pattern'=>'episode/<id:\d+>', 'verb'=>'GET'),
+                array('episode/update', 'pattern'=>'episode/<id:\d+>', 'verb'=>'PUT'),
+                array('episode/delete', 'pattern'=>'episode/<id:\d+>', 'verb'=>'DELETE'),
+                array('episode/create', 'pattern'=>'episode/', 'verb'=>'POST'),
                 // Other controllers
                 '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
             ),
