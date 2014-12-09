@@ -1,3 +1,4 @@
 .project
 assets/*
 *.log
+env.php
