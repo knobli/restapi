@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+  <meta charset="UTF-8">
+  <title>URL Test</title>
+  <style type="text/css">
+    textarea {width: 100%; min-height: 20em;}
+  </style>
+  <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+</head>
+<body>
+
+<h1>Episode Tests</h1>
+
+<h2>Index</h2>
+<label>index.php/episode</label><br>
+<textarea id="list" readonly></textarea>
+
+<h2>Create</h2>
+<label>index.php/episode</label><br>
+<textarea id="create" readonly></textarea>
+
+<h2>Read</h2>
+<label>index.php/episode</label><br>
+<textarea id="read" readonly></textarea>
+
+<h2>Update</h2>
+<label>index.php/episode</label><br>
+<textarea id="update" readonly></textarea>
+
+<h2>Delete</h2>
+<label>index.php/episode</label><br>
+<textarea id="delete" readonly></textarea>
+
+
+<script type="text/javascript">
+  $(function(){
+    $.get('index.php/episode/', function(response) {
+      $('#list').text(JSON.stringify(response, null, " "));
+    });
+
+    $.post('index.php/episode/', {
+          NR_TOTAL: 21,
+          NR_STAFFEL: 1,
+          DEUTSCHER_TITEL: 'No Mas',
+          ORIGINALTITEL: 'No Mas',
+          ERSTAUSSTRAHLUNG_USA: '21. März 2010',
+          DEUTSCHSPRACHIGE_ERSTAUSSTRAHLUNG: '10. Feb. 2011',
+          REGIE: 'Bryan Cranston',
+          DREHBUCH: 'Vince Gilligan',
+          US_QUOTEN: '1,954 Mio.',
+          INHALT: "Der Unfall hat große gesellschaftliche Folgen. Jesse beendet die Reha erfolgreich. Skyler konfrontiert Walter mit seinen Drogengeschäften und sucht eine Scheidungsanwältin auf. Walter lehnt einen neuen Deal mit Gus ab. Währenddessen kommen Tucos Cousins, um Walter zu töten."
+        },
+        function(response){
+          $('#create').text(JSON.stringify(response, null, " "));
+    });
+
+  });
+</script>
+
+
+</body>
+</html>

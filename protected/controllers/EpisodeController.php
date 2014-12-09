@@ -49,12 +49,12 @@ class EpisodeController extends Controller
 	{
 	    // Check if id was submitted via GET
 	    if(!isset($id))
-	        $this->_sendResponse(500, 'Error: Parameter <b>id</b> is missing' );
+	        $this->_sendResponse(500, 'Error: Parameter <b>id</b> is missing', 'text/html');
 	 
 	    $model = Episode::model()->findByPk($id);
 	    // Did we find the requested model? If not, raise an error
 	    if(is_null($model)){
-	        $this->_sendResponse(404, 'No Item found with id '.$id);
+	        $this->_sendResponse(404, 'No Item found with id '.$id, 'text/html');
 	    } else {
 	        $this->_sendResponse(200, CJSON::encode($model));
 		}
@@ -76,7 +76,7 @@ class EpisodeController extends Controller
 	        else
 	            $this->_sendResponse(500, 
 	                sprintf('Parameter <b>%s</b> is not allowed for model <b>%s</b>', $var,
-	                $_GET['model']) );
+	                $_GET['model']), 'text/html' );
 	    }
 	    // Try to save the model
 	    if($model->save())
@@ -94,7 +94,7 @@ class EpisodeController extends Controller
 	            $msg .= "</ul>";
 	        }
 	        $msg .= "</ul>";
-	        $this->_sendResponse(500, $msg );
+	        $this->_sendResponse(500, $msg ,'text/html');
 	    }
 	}
 
