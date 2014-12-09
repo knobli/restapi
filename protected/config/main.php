@@ -53,6 +53,7 @@ return array(
             'rules'=>array(
                 // REST patterns
                 array('episode/index', 'pattern'=>'episode', 'verb'=>'GET'),
+                array('episode/index', 'pattern'=>'episode/<param:[A-Za-z_]+>/<val:[A-Za-z_]+>', 'verb'=>'GET'),
                 array('episode/view', 'pattern'=>'episode/<id:\d+>', 'verb'=>'GET'),
                 array('episode/update', 'pattern'=>'episode/<id:\d+>', 'verb'=>'PUT'),
                 array('episode/delete', 'pattern'=>'episode/<id:\d+>', 'verb'=>'DELETE'),

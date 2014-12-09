@@ -166,14 +166,25 @@ class EpisodeController extends Controller
 	/**
 	 * Lists all models.
 	 */
-	public function actionIndex()
+	public function actionIndex($param = null, $val = null)
 	{
-		$dataProvider=new CActiveDataProvider('Episode');
-        $models = $dataProvider->getData();
-        $rows = array();
-        foreach($models as $model)
-            $rows[] = $model->attributes;
-        $this->_sendResponse(200, CJSON::encode($rows));
+		if($param === null){
+			$dataProvider=new CActiveDataProvider('Episode');
+	        $models = $dataProvider->getData();
+	        $rows = array();
+	        foreach($models as $model)
+	            $rows[] = $model->attributes;
+	        $this->_sendResponse(200, CJSON::encode($rows));
+		} else {
+			$criteria = new CDbCriteria;
+ 
+        	$criteria->compare('id', $this->id);
+			$models=Episode::model()->findAll($param .' like :param', array(':param'=>"%" . $val . "%"));
+			$rows = array();
+	        foreach($models as $model)
+	            $rows[] = $model->attributes;
+	        $this->_sendResponse(200, CJSON::encode($rows));
+		}
 	}
 
 	/**
