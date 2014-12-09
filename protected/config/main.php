@@ -47,9 +47,21 @@ return array(
 			),
 		),
 		*/
-		'db'=>array(
-			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
-		),
+
+        'urlManager'=>array(
+            'urlFormat'=>'path',
+            'rules'=>array(
+                // REST patterns
+                array('episode/list', 'pattern'=>'episode/<model:\w+>', 'verb'=>'GET'),
+                array('episode/view', 'pattern'=>'episode/<model:\w+>/<id:\d+>', 'verb'=>'GET'),
+                array('episode/update', 'pattern'=>'episode/<model:\w+>/<id:\d+>', 'verb'=>'PUT'),
+                array('episode/delete', 'pattern'=>'episode/<model:\w+>/<id:\d+>', 'verb'=>'DELETE'),
+                array('episode/create', 'pattern'=>'episode/<model:\w+>', 'verb'=>'POST'),
+                // Other controllers
+                '<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
+            ),
+        ),
+
 		// uncomment the following to use a MySQL database
 		
 		'db'=>array(
