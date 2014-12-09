@@ -7,20 +7,20 @@
  * @property integer $NR_TOTAL
  * @property integer $NR_STAFFEL
  * @property string $DEUTSCHER_TITEL
- * @property string $ORIGINAL足TITEL
- * @property string $ERSTAUS足STRAHLUNG_USA
- * @property string $DEUTSCH足SPRACHIGE_ERSTAUS足STRAHLUNG足_D
+ * @property string $ORIGINALTITEL
+ * @property string $ERSTAUSSTRAHLUNG_USA
+ * @property string $DEUTSCHSPRACHIGE_ERSTAUSSTRAHLUNG
  * @property string $REGIE
  * @property string $DREHBUCH
  * @property string $US_QUOTEN
  * @property string $INHALT
  */
-class Episoden extends CActiveRecord
+class Episode extends CActiveRecord
 {
 	/**
 	 * Returns the static model of the specified AR class.
 	 * @param string $className active record class name.
-	 * @return Episoden the static model class
+	 * @return Episode the static model class
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -43,12 +43,12 @@ class Episoden extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('NR_TOTAL, NR_STAFFEL, DEUTSCHER_TITEL, ORIGINAL足TITEL, ERSTAUS足STRAHLUNG_USA, DEUTSCH足SPRACHIGE_ERSTAUS足STRAHLUNG足_D, REGIE, DREHBUCH, US_QUOTEN, INHALT', 'required'),
+			array('NR_TOTAL, NR_STAFFEL, DEUTSCHER_TITEL, ORIGINALTITEL, ERSTAUSSTRAHLUNG_USA, DEUTSCHSPRACHIGE_ERSTAUSSTRAHLUNG, REGIE, DREHBUCH, US_QUOTEN, INHALT', 'required'),
 			array('NR_TOTAL, NR_STAFFEL', 'numerical', 'integerOnly'=>true),
-			array('DEUTSCHER_TITEL, ORIGINAL足TITEL, ERSTAUS足STRAHLUNG_USA, DEUTSCH足SPRACHIGE_ERSTAUS足STRAHLUNG足_D, REGIE, DREHBUCH, US_QUOTEN', 'length', 'max'=>255),
+			array('DEUTSCHER_TITEL, ORIGINALTITEL, ERSTAUSSTRAHLUNG_USA, DEUTSCHSPRACHIGE_ERSTAUSSTRAHLUNG, REGIE, DREHBUCH, US_QUOTEN', 'length', 'max'=>255),
 			// The following rule is used by search().
 			// Please remove those attributes that should not be searched.
-			array('NR_TOTAL, NR_STAFFEL, DEUTSCHER_TITEL, ORIGINAL足TITEL, ERSTAUS足STRAHLUNG_USA, DEUTSCH足SPRACHIGE_ERSTAUS足STRAHLUNG足_D, REGIE, DREHBUCH, US_QUOTEN, INHALT', 'safe', 'on'=>'search'),
+			array('NR_TOTAL, NR_STAFFEL, DEUTSCHER_TITEL, ORIGINALTITEL, ERSTAUSSTRAHLUNG_USA, DEUTSCHSPRACHIGE_ERSTAUSSTRAHLUNG, REGIE, DREHBUCH, US_QUOTEN, INHALT', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -72,9 +72,9 @@ class Episoden extends CActiveRecord
 			'NR_TOTAL' => 'Nr Total',
 			'NR_STAFFEL' => 'Nr Staffel',
 			'DEUTSCHER_TITEL' => 'Deutscher Titel',
-			'ORIGINAL足TITEL' => 'Original皚 Titel',
-			'ERSTAUS足STRAHLUNG_USA' => 'Erstaus皚 Strahlung Usa',
-			'DEUTSCH足SPRACHIGE_ERSTAUS足STRAHLUNG足_D' => 'Deutsch皚 Sprachige Erstaus皚 Strahlung皚 D',
+			'ORIGINALTITEL' => 'Originaltitel',
+			'ERSTAUSSTRAHLUNG_USA' => 'Erstausstrahlung Usa',
+			'DEUTSCHSPRACHIGE_ERSTAUSSTRAHLUNG' => 'Deutschsprachige Erstausstrahlung',
 			'REGIE' => 'Regie',
 			'DREHBUCH' => 'Drehbuch',
 			'US_QUOTEN' => 'Us Quoten',
@@ -96,9 +96,9 @@ class Episoden extends CActiveRecord
 		$criteria->compare('NR_TOTAL',$this->NR_TOTAL);
 		$criteria->compare('NR_STAFFEL',$this->NR_STAFFEL);
 		$criteria->compare('DEUTSCHER_TITEL',$this->DEUTSCHER_TITEL,true);
-		$criteria->compare('ORIGINAL足TITEL',$this->ORIGINAL足TITEL,true);
-		$criteria->compare('ERSTAUS足STRAHLUNG_USA',$this->ERSTAUS足STRAHLUNG_USA,true);
-		$criteria->compare('DEUTSCH足SPRACHIGE_ERSTAUS足STRAHLUNG足_D',$this->DEUTSCH足SPRACHIGE_ERSTAUS足STRAHLUNG足_D,true);
+		$criteria->compare('ORIGINALTITEL',$this->ORIGINALTITEL,true);
+		$criteria->compare('ERSTAUSSTRAHLUNG_USA',$this->ERSTAUSSTRAHLUNG_USA,true);
+		$criteria->compare('DEUTSCHSPRACHIGE_ERSTAUSSTRAHLUNG',$this->DEUTSCHSPRACHIGE_ERSTAUSSTRAHLUNG,true);
 		$criteria->compare('REGIE',$this->REGIE,true);
 		$criteria->compare('DREHBUCH',$this->DREHBUCH,true);
 		$criteria->compare('US_QUOTEN',$this->US_QUOTEN,true);
