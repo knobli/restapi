@@ -28,15 +28,11 @@ class EpisodeController extends Controller
 	{
 		return array(
 			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+				'actions'=>array('index','view', 'create', 'update', 'delete'),
 				'users'=>array('*'),
 			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
-				'users'=>array('@'),
-			),
 			array('allow', // allow admin user to perform 'admin' and 'delete' actions
-				'actions'=>array('admin','delete'),
+				'actions'=>array('admin'),
 				'users'=>array('admin'),
 			),
 			array('deny',  // deny all users
@@ -51,9 +47,17 @@ class EpisodeController extends Controller
 	 */
 	public function actionView($id)
 	{
-		$this->render('view',array(
-			'model'=>$this->loadModel($id),
-		));
+	    // Check if id was submitted via GET
+	    if(!isset($id))
+	        $this->_sendResponse(500, 'Error: Parameter <b>id</b> is missing' );
+	 
+	    $model = Episode::model()->findByPk($id);
+	    // Did we find the requested model? If not, raise an error
+	    if(is_null($model)){
+	        $this->_sendResponse(404, 'No Item found with id '.$id);
+	    } else {
+	        $this->_sendResponse(200, CJSON::encode($model));
+		}
 	}
 
 	/**
@@ -62,21 +66,36 @@ class EpisodeController extends Controller
 	 */
 	public function actionCreate()
 	{
-		$model=new Episode;
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
-		if(isset($_POST['Episode']))
-		{
-			$model->attributes=$_POST['Episode'];
-			if($model->save())
-				$this->redirect(array('view','id'=>$model->NR_TOTAL));
-		}
-
-		$this->render('create',array(
-			'model'=>$model,
-		));
+		$model = new Episode;
+		
+	    // Try to assign POST values to attributes
+	    foreach($_POST as $var=>$value) {
+	        // Does the model have this attribute? If not raise an error
+	        if($model->hasAttribute($var))
+	            $model->$var = $value;
+	        else
+	            $this->_sendResponse(500, 
+	                sprintf('Parameter <b>%s</b> is not allowed for model <b>%s</b>', $var,
+	                $_GET['model']) );
+	    }
+	    // Try to save the model
+	    if($model->save())
+	        $this->_sendResponse(200, CJSON::encode($model));
+	    else {
+	        // Errors occurred
+	        $msg = "<h1>Error</h1>";
+	        $msg .= sprintf("Couldn't create model <b>%s</b>", $_GET['model']);
+	        $msg .= "<ul>";
+	        foreach($model->errors as $attribute=>$attr_errors) {
+	            $msg .= "<li>Attribute: $attribute</li>";
+	            $msg .= "<ul>";
+	            foreach($attr_errors as $attr_error)
+	                $msg .= "<li>$attr_error</li>";
+	            $msg .= "</ul>";
+	        }
+	        $msg .= "</ul>";
+	        $this->_sendResponse(500, $msg );
+	    }
 	}
 
 	/**
