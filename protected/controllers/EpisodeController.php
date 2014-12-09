@@ -126,7 +126,7 @@ class EpisodeController extends Controller
 	        else {
 	            $this->_sendResponse(500, 
 	                sprintf('Parameter <b>%s</b> is not allowed for model <b>%s</b>',
-	                $var, $_GET['model']) );
+	                $var, 'Episode') );
 	        }
 	    }
 		
@@ -149,7 +149,7 @@ class EpisodeController extends Controller
 		if($model === null){
         $this->_sendResponse(400, 
                 sprintf("Error: Didn't find any model <b>%s</b> with ID <b>%s</b>.",
-                $_GET['model'], $_GET['id']) );
+                'Episode', $id) );
 		}
 
 		 // Delete the model
@@ -159,7 +159,7 @@ class EpisodeController extends Controller
 	    } else{
 	        $this->_sendResponse(500, 
 	                sprintf("Error: Couldn't delete model <b>%s</b> with ID <b>%s</b>.",
-	                $_GET['model'], $_GET['id']) );
+	                'Episode', $id) );
 		}
 	}
 
