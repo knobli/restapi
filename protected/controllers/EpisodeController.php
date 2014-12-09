@@ -76,7 +76,7 @@ class EpisodeController extends Controller
 	        else
 	            $this->_sendResponse(500, 
 	                sprintf('Parameter <b>%s</b> is not allowed for model <b>%s</b>', $var,
-	                $_GET['model']), 'text/html' );
+	                'Episode'), 'text/html' );
 	    }
 	    // Try to save the model
 	    if($model->save())
