@@ -32,6 +32,10 @@
 <label>index.php/episode</label><br>
 <textarea id="delete" readonly></textarea>
 
+<h2>List with search parameter</h2>
+<label>index.php/episode/INHALT/Walter</label><br>
+<textarea id="listSearch" readonly></textarea>
+
 
 <script type="text/javascript">
   $(function(){
@@ -53,6 +57,10 @@
         },
         function(response){
           $('#create').text(JSON.stringify(response, null, " "));
+    });
+    
+    $.get('index.php/episode/INHALT/Walter', function(response) {
+      $('#listSearch').text(JSON.stringify(response, null, " "));
     });
 
   });
