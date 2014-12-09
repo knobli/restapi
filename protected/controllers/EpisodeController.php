@@ -105,8 +105,7 @@ class EpisodeController extends Controller
 	 */
 	public function actionUpdate($id)
 	{
-		$json = file_get_contents('php://input');
-		$put_vars = CJSON::decode($json,true);
+		parse_str(file_get_contents("php://input"),$put_vars);	
 		$model=$this->loadModel($id);
 		
 		if($model === null){
@@ -114,9 +113,6 @@ class EpisodeController extends Controller
                 sprintf("Error: Didn't find any model <b>%s</b> with ID <b>%s</b>.",
                 'Episode', $id) );
 		}
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
 
 		   // Try to assign PUT parameters to attributes
 	    foreach($put_vars as $var=>$value) {
