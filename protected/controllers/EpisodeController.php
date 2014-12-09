@@ -145,7 +145,7 @@ class EpisodeController extends Controller
 		if($model === null){
         $this->_sendResponse(400, 
                 sprintf("Error: Didn't find any model <b>%s</b> with ID <b>%s</b>.",
-                'Episode', $id) );
+                'Episode', $id),'text/html' );
 		}
 
 		 // Delete the model
@@ -155,7 +155,7 @@ class EpisodeController extends Controller
 	    } else{
 	        $this->_sendResponse(500, 
 	                sprintf("Error: Couldn't delete model <b>%s</b> with ID <b>%s</b>.",
-	                'Episode', $id) );
+	                'Episode', $id),'text/html' );
 		}
 	}
 
